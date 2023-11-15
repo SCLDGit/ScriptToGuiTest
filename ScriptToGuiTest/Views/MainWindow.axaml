@@ -1,0 +1,53 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:ScriptToGuiTest.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:models="clr-namespace:ScriptToGuiTest.Models"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="ScriptToGuiTest.Views.MainWindow"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="ScriptToGuiTest"
+        SizeToContent="WidthAndHeight">
+
+    <Design.DataContext>
+        <vm:MainWindowViewModel />
+    </Design.DataContext>
+
+    <Grid RowDefinitions="Auto, Auto">
+        <ItemsControl Grid.Row="0"
+                      Grid.IsSharedSizeScope="True"
+                      Items="{Binding ScriptValues}">
+            <ItemsControl.DataTemplates>
+                <DataTemplate DataType="models:StringScriptValueStub">
+                    <Grid IsSharedSizeScope="True">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0"
+                                   Margin="0, 0, 5, 0"
+                                   VerticalAlignment="Center"
+                                   Text="{Binding Description}" />
+                        <TextBox Grid.Column="1"
+                                 Text="{Binding Value, Mode=TwoWay}" />
+                    </Grid>
+                </DataTemplate>
+                <DataTemplate DataType="models:IntScriptValueStub">
+                    <Grid ColumnDefinitions="Auto, *">
+                        <TextBlock Grid.Column="0"
+                                   Margin="0, 0, 5, 0"
+                                   VerticalAlignment="Center"
+                                   Text="{Binding Description}" />
+                        <NumericUpDown Grid.Column="1"
+                                 Value="{Binding Value, Mode=TwoWay}" />
+                    </Grid>
+                </DataTemplate>
+            </ItemsControl.DataTemplates>
+        </ItemsControl>
+        <TextBox Grid.Row="1"
+                 HorizontalAlignment="Stretch"
+                 Text="{Binding Script, Mode=TwoWay}" />
+    </Grid>
+
+</Window>
